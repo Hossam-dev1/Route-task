@@ -6,26 +6,25 @@ import { combineLatest, forkJoin, map, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CustomersService {
-  private customersUrl = 'http://localhost:3000/customers';
-  private transactionsUrl = 'http://localhost:3000/transactions';
+  private baseUrl = 'https://abdulrahmanahmedzaghloul.github.io/api/db.json';
 
   constructor(private http: HttpClient) { }
 
   getCustomers(): Observable<any> {
-    return this.http.get<any>(this.customersUrl);
+    return this.http.get<any>(this.baseUrl);
   }
 
-  getTransactions(): Observable<any[]> {
-    return this.http.get<any[]>(this.transactionsUrl);
+  getTransactions(): Observable<any> {
+    return this.http.get<any>(this.baseUrl);
   }
 
 
-  mergeData(): Observable<any[]> {
+  mergeData(): Observable<any> {
     return combineLatest([this.getCustomers(), this.getTransactions()])
       .pipe(
-        map(([customers, transactions]) => {
-          const customerMap = customers.reduce((acc: any, customer: any) => ({ ...acc, [customer.id]: customer }), {});
-          return transactions.map(transaction => ({ ...transaction, ...customerMap[transaction.customer_id] }));
+        map(([data1, data2]) => {
+          const customerMap = data1.customers.reduce((acc: any, customer: any) => ({ ...acc, [customer.id]: customer }), {});
+          return data2.transactions.map((transaction: any) => ({ ...transaction, ...customerMap[transaction.customer_id] }));
         })
       );
   }
