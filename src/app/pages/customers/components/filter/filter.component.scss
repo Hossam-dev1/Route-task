@@ -1,0 +1,8 @@
+.filter-box{
+  display: flex;
+  justify-content: space-around;
+  .mat-mdc-form-field{
+    width: 45%;
+    padding: 1rem;
+  }
+}

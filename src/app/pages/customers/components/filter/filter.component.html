@@ -1,0 +1,14 @@
+
+<div class="filter-box">
+  <mat-form-field>
+    <mat-label>Filter By Name</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+  </mat-form-field>
+
+
+  <mat-form-field>
+    <mat-label>Filter By Amount ($)</mat-label>
+    <input type="number" matInput (keyup)="applyFilter($event)" placeholder="1000" #input>
+  </mat-form-field>
+
+</div>
